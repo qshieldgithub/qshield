@@ -54,6 +54,9 @@ class PaymentTransaction(models.Model):
     transaction_no = fields.Char(
         string='Transaction Number',
         required=False)
+    vpc_receipt_no = fields.Char(
+        string='Receipt Number',
+        required=False)
     batch_no = fields.Char(
         string='Batch Number',
         required=False)
@@ -65,6 +68,11 @@ class PaymentTransaction(models.Model):
         required=True,
         default=lambda x: str(uuid.uuid1()).replace("-", "").upper()
     )
+
+    service_id = fields.Many2one(
+        comodel_name='ebs_mod.service.request',
+        string='Service',
+        required=False)
 
     def complete_payment(self):
         self.trx_response_code = "0"

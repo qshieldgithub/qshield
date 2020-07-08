@@ -33,7 +33,10 @@ class ContactPayment(models.Model):
     amount = fields.Float(
         string='Amount',
         related='transaction_id.amount')
-
+    service_id = fields.Many2one(
+        comodel_name='ebs_mod.service.request',
+        string='Service',
+        required=False,related='transaction_id.service_id')
     desc = fields.Text(
         string="Description",
         required=False)

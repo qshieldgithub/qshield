@@ -101,7 +101,8 @@ class ContactPortal(CustomerPortal):
         amount = request.params['vpc_Amount']
         order_info = request.params['vpc_OrderInfo']
         message = request.params['vpc_Message']
-        trx_response_code = request.params.get('vpc_ReceiptNo', False)
+        trx_response_code = request.params.get('vpc_TxnResponseCode', False)
+        vpc_receipt_no = request.params.get('vpc_ReceiptNo', False)
         acq_response_code = request.params.get('vpc_AcqResponseCode', False)
         transaction_no = request.params.get('vpc_TransactionNo', False)
         batch_no = request.params.get('vpc_BatchNo', False)
@@ -120,6 +121,8 @@ class ContactPortal(CustomerPortal):
             vals['acq_response_code'] = acq_response_code
         if transaction_no:
             vals['transaction_no'] = transaction_no
+        if vpc_receipt_no:
+            vals['vpc_receipt_no'] = vpc_receipt_no
         if batch_no:
             vals['batch_no'] = batch_no
         if authorize_id:
