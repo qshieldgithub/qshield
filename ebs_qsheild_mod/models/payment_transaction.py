@@ -41,10 +41,10 @@ class PaymentTransaction(models.Model):
         required=False)
 
     trx_response_code_full = fields.Char(
-        string='Response Code Full',
+        string='Response Code',
         required=False)
     trx_response_code = fields.Selection(
-        string='Transaction Response',
+        string='Status',
         selection=[('0', 'Success'),
                    ('1', 'Error'), ],
         required=False)

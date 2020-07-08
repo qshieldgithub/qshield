@@ -115,7 +115,13 @@ class ContactPortal(CustomerPortal):
         }
         if trx_response_code:
             vals['trx_response_code_full'] = trx_response_code
-            vals['trx_response_code'] = trx_response_code[0]
+            if trx_response_code[0] == '0':
+                vals['trx_response_code'] = '0'
+            else:
+                vals['trx_response_code'] = '1'
+        else:
+            vals['trx_response_code_full'] = '1'
+            vals['trx_response_code'] = '1'
 
         if acq_response_code:
             vals['acq_response_code'] = acq_response_code
@@ -130,11 +136,10 @@ class ContactPortal(CustomerPortal):
 
         transaction.sudo().write(vals)
 
-        if trx_response_code:
-            if trx_response_code[0] == "0":
-                request.env['ebs_mod.contact.payment'].create({
-                    "transaction_id": transaction.id
-                })
+        if transaction.trx_response_code == "0":
+            request.env['ebs_mod.contact.payment'].create({
+                "transaction_id": transaction.id
+            })
 
         return request.redirect('/my/payments')
 
@@ -161,6 +166,7 @@ class ContactPortal(CustomerPortal):
             # w = re.search("localhost", host_url)
             # if not x:
             return_url = host_url + "my/payments/return_url"
+            # return_url = "http://jaafarkhansa.com/demo/gateway/index.php"
             # else:
             #     return_url = "http://jaafarkhansa.com/demo/gateway/index.php"
             transaction = env['ebs_mod.payment.transaction'].sudo().create(

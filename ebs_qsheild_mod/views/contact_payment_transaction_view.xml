@@ -16,6 +16,7 @@
                     <field name="service_id"/>
                     <field name="message"/>
                     <field name="trx_response_code"/>
+                    <field name="trx_response_code_full" optional="hide"/>
                     <field name="vpc_receipt_no" optional="hide" />
                     <field name="acq_response_code" optional="hide" />
                     <field name="transaction_no" optional="hide"/>
@@ -51,6 +52,7 @@
                             <group>
                                 <field name="order_info" readonly="True"/>
                                 <field name="trx_response_code" readonly="True"/>
+                                <field name="trx_response_code_full" readonly="True"/>
                                 <field name="vpc_receipt_no" readonly="True"/>
                                 <field name="transaction_no" readonly="True"/>
                                 <field name="batch_no" readonly="True"/>
