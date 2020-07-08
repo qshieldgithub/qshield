@@ -107,19 +107,29 @@ class ContactPortal(CustomerPortal):
         authorize_id = request.params.get('vpc_AuthorizeId', False)
 
         transaction = request.env['ebs_mod.payment.transaction'].browse(int(order_info))
-        transaction.sudo().write({
-            'trx_response_code': trx_response_code,
-            'acq_response_code': acq_response_code,
-            'message': message,
-            'transaction_no': transaction_no,
-            'batch_no': batch_no,
-            'authorize_id': authorize_id,
-        })
+        vals = {
+            'message': message
+        }
+        if trx_response_code:
+            vals['trx_response_code_full'] = trx_response_code
+            vals['trx_response_code'] = trx_response_code[0]
 
-        if trx_response_code == '0':
-            request.env['ebs_mod.contact.payment'].create({
-                "transaction_id": transaction.id
-            })
+        if acq_response_code:
+            vals['acq_response_code'] = acq_response_code
+        if transaction_no:
+            vals['transaction_no'] = transaction_no
+        if batch_no:
+            vals['batch_no'] = batch_no
+        if authorize_id:
+            vals['authorize_id'] = authorize_id
+
+        transaction.sudo().write(vals)
+
+        if trx_response_code:
+            if trx_response_code[0] == "0":
+                request.env['ebs_mod.contact.payment'].create({
+                    "transaction_id": transaction.id
+                })
 
         return request.redirect('/my/payments')
 

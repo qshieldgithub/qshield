@@ -6,13 +6,13 @@
             <field name="name">Contact Payment Tree</field>
             <field name="model">ebs_mod.contact.payment</field>
             <field name="arch" type="xml">
-                <tree create="0" delete="0">
+                <tree create="0" delete="0" edit="0">
                     <field name="partner_id"/>
                     <field name="partner_type"/>
                     <field name="amount"/>
                     <field name="currency_id"/>
                     <field name="create_date"/>
-                    <field name="desc"/>
+
 
                 </tree>
             </field>
@@ -21,7 +21,7 @@
 
         <!--window -->
         <record id="contact_payment_window" model="ir.actions.act_window">
-            <field name="name">Contact Payment Tree</field>
+            <field name="name">Contact Payment</field>
             <field name="res_model">ebs_mod.contact.payment</field>
             <field name="view_mode">tree</field>
         </record>
@@ -34,13 +34,6 @@
                 <search string="Search Contract">
                     <field name="partner_id"/>
                     <field name="partner_type"/>
-                    <field name="create_date"/>
-                    <field name="currency_id"/>
-                    <field name="amount"/>
-                    <group expand="0" name="group_by" string="Group By">
-                        <filter name="partner_group" string="Contact" context="{'group_by': 'partner_id'}"/>
-                        <filter name="partner_type_group" string="Contact Type" context="{'group_by': 'partner_type'}"/>
-                    </group>
                 </search>
             </field>
         </record>

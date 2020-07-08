@@ -39,6 +39,9 @@ class PaymentTransaction(models.Model):
         string='Message',
         required=False)
 
+    trx_response_code_full = fields.Char(
+        string='Response Code Full',
+        required=False)
     trx_response_code = fields.Selection(
         string='Transaction Response',
         selection=[('0', 'Success'),
@@ -56,3 +59,14 @@ class PaymentTransaction(models.Model):
     authorize_id = fields.Char(
         string='Authorized ID',
         required=False)
+
+    def complete_payment(self):
+        self.trx_response_code = "0"
+        self.message = "Transaction Completed Manually"
+        self.env['ebs_mod.contact.payment'].create({
+            "transaction_id": self.id
+        })
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+        }

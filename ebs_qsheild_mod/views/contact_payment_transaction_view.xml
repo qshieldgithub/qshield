@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <data>
+        <!--list view -->
+        <record id="contact_payment_transaction_tree" model="ir.ui.view">
+            <field name="name">Contact Payment Transaction Tree</field>
+            <field name="model">ebs_mod.payment.transaction</field>
+            <field name="arch" type="xml">
+                <tree create="0" delete="0" edit="0">
+                    <field name="partner_id"/>
+                    <field name="partner_type"/>
+                    <field name="amount"/>
+                    <field name="currency_id"/>
+                    <field name="date"/>
+                    <field name="message"/>
+                    <field name="trx_response_code"/>
+                    <field name="acq_response_code"/>
+                    <field name="transaction_no"/>
+                    <field name="batch_no"/>
+                    <field name="authorize_id"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="contact_payment_transaction_form" model="ir.ui.view">
+            <field name="name">Contact Payment Transaction Form</field>
+            <field name="model">ebs_mod.payment.transaction</field>
+            <field name="arch" type="xml">
+                <form create="0" delete="0" edit="0">
+                    <header>
+                        <button name="complete_payment" string="Complete Payment" type="object"
+                                attrs="{'invisible':[('trx_response_code','=','0')]}"
+                                groups="ebs_qsheild_mod.qshield_payment_gateway_manager"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="partner_type"/>
+                                <field name="amount"/>
+                                <field name="currency_id"/>
+                                <field name="date"/>
+                            </group>
+                            <group>
+                                <field name="trx_response_code"/>
+                                <field name="transaction_no"/>
+                                <field name="batch_no"/>
+                                <field name="authorize_id"/>
+
+                            </group>
+                        </group>
+                        <group>
+                            <field name="message"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--window -->
+        <record id="contact_payment_transaction_window" model="ir.actions.act_window">
+            <field name="name">Contact Payment Tree</field>
+            <field name="res_model">ebs_mod.payment.transaction</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record id="contact_payment_transaction_filter" model="ir.ui.view">
+            <field name="name">Contact Payment Transaction Filters</field>
+            <field name="model">ebs_mod.payment.transaction</field>
+            <field name="arch" type="xml">
+                <search string="Search Contract">
+                    <field name="partner_id"/>
+                    <field name="partner_type"/>
+                    <field name="partner_type"/>
+                     <separator/>
+                    <filter string="Success Transactions" name="success" domain="[('trx_response_code', '=', '0')]"/>
+                    <filter string="Failed Transactions" name="failed" domain="[('trx_response_code', '!=', '0')]"/>
+                    <separator/>
+                </search>
+            </field>
+        </record>
+        <!--menu -->
+
+
+    </data>
+</odoo>

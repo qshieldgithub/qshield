@@ -20,11 +20,30 @@
             action="contracts_window"
             parent="contacts.menu_contacts"
             sequence="5"
-    /> <menuitem
+    />
+
+
+    <menuitem
             id="contract_payment_view_menu"
+            name="Payment Gateway"
+            parent="contacts.menu_contacts"
+            groups="ebs_qsheild_mod.qshield_payment_gateway_manager,ebs_qsheild_mod.qshield_payment_gateway_user"
+    />
+
+
+    <menuitem
+            id="contact_payments_menu"
             name="Payments"
             action="contact_payment_window"
-            parent="contacts.menu_contacts"
+            parent="contract_payment_view_menu"
+            sequence="5"
+    />
+
+     <menuitem
+            id="contact_transactions_menu"
+            name="All Transactions"
+            action="contact_payment_transaction_window"
+            parent="contract_payment_view_menu"
             sequence="10"
     />
 
