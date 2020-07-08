@@ -11,6 +11,7 @@
                     <field name="partner_type"/>
                     <field name="amount"/>
                     <field name="currency_id"/>
+                    <field name="order_info"/>
                     <field name="date"/>
                     <field name="message"/>
                     <field name="trx_response_code"/>
@@ -44,6 +45,7 @@
                                 <field name="date"/>
                             </group>
                             <group>
+                                <field name="order_info"/>
                                 <field name="trx_response_code"/>
                                 <field name="transaction_no"/>
                                 <field name="batch_no"/>

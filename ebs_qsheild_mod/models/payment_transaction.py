@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
+import uuid
 
 
 class PaymentTransaction(models.Model):
@@ -59,6 +60,11 @@ class PaymentTransaction(models.Model):
     authorize_id = fields.Char(
         string='Authorized ID',
         required=False)
+    order_info = fields.Char(
+        string='Order Info',
+        required=True,
+        default=lambda x: str(uuid.uuid1()).replace("-", "").upper()
+    )
 
     def complete_payment(self):
         self.trx_response_code = "0"

@@ -11,6 +11,7 @@ import hmac
 import hashlib
 import json
 import re
+import uuid
 import array
 
 
@@ -106,7 +107,8 @@ class ContactPortal(CustomerPortal):
         batch_no = request.params.get('vpc_BatchNo', False)
         authorize_id = request.params.get('vpc_AuthorizeId', False)
 
-        transaction = request.env['ebs_mod.payment.transaction'].browse(int(order_info))
+        transaction = request.env['ebs_mod.payment.transaction'].search([('order_info', '=', order_info)],
+                                                                        limit=1)
         vals = {
             'message': message
         }
@@ -175,7 +177,7 @@ class ContactPortal(CustomerPortal):
             message += "&vpc_Locale=en"
             message += "&vpc_MerchTxnRef=txn1"
             message += "&vpc_Merchant=DB91363"
-            message += "&vpc_OrderInfo=" + str(transaction.id)
+            message += "&vpc_OrderInfo=" + transaction.order_info
             message += "&vpc_ReturnURL=" + return_url
             message += "&vpc_Version=1"
             signature = hmac.new(binascii.unhexlify(bytes(api_secret, 'UTF-8')),
@@ -185,7 +187,7 @@ class ContactPortal(CustomerPortal):
             return json.dumps({
                 'status': "success",
                 'data': {'key': signature,
-                         'order_id': transaction.id,
+                         'order_id': transaction.order_info,
                          'return_url': return_url
                          }
             })
